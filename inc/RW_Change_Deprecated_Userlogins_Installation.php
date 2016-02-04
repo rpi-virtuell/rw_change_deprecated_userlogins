@@ -1,55 +1,17 @@
 <?php
 /**
- * @TODO  Class RW_Change_Deprecated_Userlogins_Installation
+ * Class RW_Change_Deprecated_Userlogins_Installation
  *
  * Contains some helper code for plugin installation
  *
- * @package   @TODO RW Demo Plugin
- * @author    @TODO Frank Staude
+ * @package   RW Change Deprecated Userlogins
+ * @author    Joachim Happel
  * @license   GPL-2.0+
- * @link      @TODO https://github.com/rpi-virtuell/plugin-skeleton
+ * @link      https://github.com/rpi-virtuell/rw_change_deprecated_userlogins
  */
-class RW_Change_Deprecated_Userlogins_Installation { //@TODO  Klassenname
+class RW_Change_Deprecated_Userlogins_Installation {
 
-    /**
-     * rewirte user_login
-     *
-     * @ince    0.0.1
-     * @access  private
-     * @static
-     * @action  rw_sticky_activity_autoload_unregister
-     * @return  void
-     */
 
-   static function rewrite(){
-        global $wpdb;
-
-        if( !get_option('deprecated_logins_rewritten', false) ){
-
-            $sql =  "
-				delete from wp_usermeta where meta_key =  'deprecated_login';
-
-				insert into wp_usermeta (user_id,meta_key,meta_value)
-				 select
-					 ID as user_id,
-					 'deprecated_login' as meta_key
-					 ,user_login as meta_value
-					 FROM wp_users
-						WHERE user_login Like '% %'
-						OR user_login Like '%\_'
-						OR user_login Like '\_%';
-
-				update wp_users set user_login = replace(replace(replace(user_login,'.','-'),' ','-'),'--','-') where user_login Like '% %';
-				update wp_users set user_login = replace(user_login,'_','') where user_login Like '%\_' or user_login Like '\_%';
-				";
-
-            $wpdb->query( $sql );
-
-            update_option ( 'deprecated_logins_rewritten', 1 );
-
-        }
-
-    }
 
     /**
      * Check some thinks on plugin activation
@@ -86,7 +48,6 @@ class RW_Change_Deprecated_Userlogins_Installation { //@TODO  Klassenname
             );
         }
 
-        self::rewrite();
 
     }
 
@@ -101,7 +62,7 @@ class RW_Change_Deprecated_Userlogins_Installation { //@TODO  Klassenname
      * @return  void
      */
     public static function on_deactivation() {
-
+        delete_option ( 'deprecated_logins_rewritten' );
     }
 
     /**
@@ -118,7 +79,7 @@ class RW_Change_Deprecated_Userlogins_Installation { //@TODO  Klassenname
      */
     public static function on_uninstall() {
 
-
+        delete_option ( 'deprecated_logins_rewritten' );
 
     }
 }

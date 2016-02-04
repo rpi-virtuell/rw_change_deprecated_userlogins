@@ -114,9 +114,10 @@ class RW_Change_Deprecated_Userlogins {
 
         // Hier Filter und Actions einbinden.
         // alternative Authentifizierung über veraltete userl_logins ermöglichen
+        add_action( 'admin_notices',   array( 'RW_Change_Deprecated_Userlogins_Core', 'rewrite') );
         add_filter( 'authenticate',   array( 'RW_Change_Deprecated_Userlogins_Core', 'authenticate'), 30, 3 );
 
-        do_action( 'rw_change_deprecated_userlogins_init' );
+        // do_action( 'rw_change_deprecated_userlogins_init' );
     }
 
     /**
@@ -219,15 +220,15 @@ class RW_Change_Deprecated_Userlogins {
 }
 
 
-if ( class_exists( 'RW_Change_Deprecated_Userlogins' ) ) { 
+if ( class_exists( 'RW_Change_Deprecated_Userlogins' ) ) {
 
 
-    add_action( 'plugins_loaded', array( 'RW_Change_Deprecated_Userlogins', 'get_instance' ) ); 
+    add_action( 'plugins_loaded', array( 'RW_Change_Deprecated_Userlogins', 'get_instance' ) );
 
     require_once 'inc/RW_Change_Deprecated_Userlogins_Autoloader.php';
-    RW_Change_Deprecated_Userlogins_Autoloader::register();  
+    RW_Change_Deprecated_Userlogins_Autoloader::register();
 
-    register_activation_hook( __FILE__, array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_activate' ) ); 
-    register_uninstall_hook(  __FILE__,	array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_uninstall' ) ); 
-    register_deactivation_hook( __FILE__, array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_deactivation' ) ); 
+    register_activation_hook( __FILE__, array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_activate' ) );
+    register_uninstall_hook(  __FILE__,	array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_uninstall' ) );
+    register_deactivation_hook( __FILE__, array( 'RW_Change_Deprecated_Userlogins_Installation', 'on_deactivation' ) );
 }
