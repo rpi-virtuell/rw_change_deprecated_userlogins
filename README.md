@@ -1,6 +1,6 @@
 #RW Change Deprecated Userlogins
 
-Dieses Plugin wurde notwendig nach dem Import von Benutzern aus einem andenren System in Wordpress.
+Dieses Plugin wurde notwendig nach dem Import von Benutzern aus einem anderen System in Wordpress.
 Das Plugin beseitigt insbesondere Leerzeichen und Punkte in Benutzernamen, um Konflikte in Wordpress zu vermeiden. 
 Damit Benutzer sich trotzdem mit ihren "alten" Benutzernamen anmelden können, werden die in der Tabelle usermeta hinterlegt und bei einem Login überprüft.
 Nach einem Login mit dem "alten" Benutzernamen bekommt der Nutzer eine E-Mail, in dem im die Änderung mitgeteilt wird:
