@@ -111,31 +111,33 @@ class RW_Change_Deprecated_Userlogins_Core {
             );
 
             $username = $wpdb->get_var( $sql );
+			if( !empty($username) ){
+				$user = wp_authenticate($username, $password);
 
-            $user = wp_authenticate($username, $password);
+    
 
-            if (!is_wp_error($user)){
+				if (!is_wp_error($user)){
 
-                //notify user about changed username
+					//notify user about changed username
 
-                $message =
+					$message =
 
-                    "Hallo ".$deprecated_login.",<br><br>".
-                    "Diese Nachricht erhalten Sie, weil sie sich mit dem Benutzername '{$deprecated_login}' ".
-                    "im Netzwerk von rpi-virtuell/reliwerk angemeldet haben.".
-                    "<br>" .
-                    "Aus technischen Gründen (der Benutzername enthält Punkte, Sonderzeichen oder Leerzeichen) ".
-                    "musste dieser geändert werden und heißt nun '<b>".$username. "</b>' ".
-                    "Bitte verwenden Sie zur Anmeldung nur noch den geänderten Benutzernamen.<br><br>".
-                    "Vielen Dank für dein Verständnis! <br><br>".
-                    "Dein Technik Team für <a href='http://about.rpi-virtuell.de'>rpi-virtuell</a>";
+						"Hallo ".$deprecated_login.",<br><br>".
+						"Diese Nachricht erhalten Sie, weil sie sich mit dem Benutzername '{$deprecated_login}' ".
+						"im Netzwerk von rpi-virtuell/reliwerk angemeldet haben.".
+						"<br>" .
+						"Aus technischen Gründen (der Benutzername enthält Punkte, Sonderzeichen oder Leerzeichen) ".
+						"musste dieser geändert werden und heißt nun '<b>".$username. "</b>' ".
+						"Bitte verwenden Sie zur Anmeldung nur noch den geänderten Benutzernamen.<br><br>".
+						"Vielen Dank für dein Verständnis! <br><br>".
+						"Dein Technik Team für <a href='http://about.rpi-virtuell.de'>rpi-virtuell</a>";
 
-                if($user->user_email){
-                    $bool = wp_mail($user->user_email, '[rpi-virtuell.de login] Dein Benutzername wurde geändert.', $message);
-                }
+					if($user->user_email){
+						$bool = wp_mail($user->user_email, '[rpi-virtuell.de login] Dein Benutzername wurde geändert.', $message);
+					}
 
-            }
-
+				}
+			}
         }
 
         return $user;
